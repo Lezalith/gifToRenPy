@@ -1,3 +1,5 @@
+####### File stuff #####################################
+
 # Lets you pick a file and returns it.
 import easygui
 
@@ -22,3 +24,26 @@ gifFile = gifFilePath.split("\\")[-1]
 # File name without extension.
 gifFileName = ".".join(gifFile.split(".")[:-1])
 # print(gifFileName)
+
+
+####### Gif into frames #####################################
+
+
+# For the (gif -> png) conversion.
+from PIL import Image
+
+# Load in chosen file.
+im = Image.open(gifFilePath)
+
+# For every frame inside the loaded Image:
+for frameIndex in range( im.n_frames ):
+
+    # Point at another frame.
+    im.seek(frameIndex)
+
+    # Filename of the saved frame.
+    # Format is "[chosen file without extension][index of the frame].png"
+    saveFileName = "{}{}.png".format(gifFileName, frameIndex)
+
+    # Save the frame.
+    im.save( saveFileName )

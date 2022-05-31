@@ -5,24 +5,27 @@ import easygui
 
 def pickFile():
 
+    # Open the prompt.
     a = easygui.fileopenbox( title = "Pick .gif to split:" )
 
     # Raise exception if a file wasn't picked
     if not a:
         raise Exception("Nothing selected!")
         
+    # Return the file.
     return a
 
 # File path with extension.
 gifFilePath = pickFile()
-# print(gifFilePath)
 
 # File name with extension.
 gifFile = gifFilePath.split("\\")[-1]
-# print(gifFile)
 
 # File name without extension.
 gifFileName = ".".join(gifFile.split(".")[:-1])
+
+# print(gifFilePath)
+# print(gifFile)
 # print(gifFileName)
 
 
@@ -32,21 +35,25 @@ gifFileName = ".".join(gifFile.split(".")[:-1])
 import os 
 
 # Folder inside which all results are placed.
+#
+# This is important because this directory is included in paths inside the generated .rpy file.
 # "images/" means the result inside should be placed inside a project's "images" folder.
 baseOutputDir = "images/"
 
-# Create it, if it doesn't exist.
+# If the directory doesn't already exist...
 if not os.path.isdir(baseOutputDir):
 
+    # ...create it.
     os.mkdir(baseOutputDir) 
 
 # Folder inside which this result will be placed, in the form of "baseOutputDir/gifFileName/"
 gifOutputDir = baseOutputDir + gifFileName + "/"
  
-# This folder must not already exist.
+# This directory must not already exist.
 if os.path.isdir(gifOutputDir):
     raise Exception("It looks like the directory for output, \"{}\", exists already!".format( baseOutputDir + gifFileName ))
 
+# Create the directory.
 os.mkdir(gifOutputDir)
 
 
@@ -79,15 +86,14 @@ for frameIndex in range( im.n_frames ):
     # Used in creating the .rpy file.
     pathsToFrames.append(saveFileName)
 
-print("\nSuccessfully saved all frames into \"{}\".\n".format(gifOutputDir))
+print("\nSuccessfully saved all frames into \"{}\"\n\n###########################################################\n".format(gifOutputDir))
 
 
 ####### Settings for creating a Ren'Py image statement. ###########################################
 
-print("You will now be asked for some settings. Default values are chosen when nothing is typed in.")
+print("You will now be asked for some settings, so that a .rpy file with a prepared image statement can be created.\nDefault values are chosen when nothing is typed in.\n")
 
-
-# Time interval between frames.
+### Time interval between frames. ###################################
 pauseInterval = raw_input("Pause interval between frames? (float, default is 0.1) -- ")
 
 # Default, if nothing given.
@@ -101,29 +107,35 @@ else:
     try:
         pauseInterval = float(pauseInterval)
 
+    # If cannot be converted:
     except:
         raise Exception("Pause interval, if given, must be a whole or a decimal number.")
 
 
-# Whether the animation should repeat.
-addRepeat = raw_input("Should the animation repeat? (y/n, default is False) -- ")
+### Whether the animation should repeat. ############################
+addRepeat = raw_input("Should the animation repeat? (y/n, default is \"n\") -- ")
 
+# Positive input.
 if addRepeat == "y":
 
     addRepeat = True
 
+# Negative or no input.
 elif addRepeat == "n" or not addRepeat:
 
     addRepeat = False
 
+# Something else typed in.
 else:
 
     raise Exception("Something other than \"y\", \"n\" or \"\" typed in.")
 
 
-# Properties that will be added onto the first line, in effect throughout the whole animation.
-firstProperties = raw_input("Add some properties onto the first line? (Properties written like you would in ATL, None by default) -- ")
+### Properties that will be added onto the first line. ##############
+### These will be in effect throughout the whole animation. #########
+firstProperties = raw_input("Add some properties onto the first line? (Properties written like you would in ATL, none by default) -- ")
 
+# If none are given, the line won't be added at all.
 if not firstProperties:
 
     firstProperties = None
@@ -160,4 +172,4 @@ with open(rpyFilePath, "w+") as f:
 
         f.write("    repeat")
 
-print("\nSuccessfully saved the .rpy file as \"{}\".\n".format(rpyFilePath))
+print("\n###########################################################\n\nSuccessfully saved the .rpy file as \"{}\"".format(rpyFilePath))

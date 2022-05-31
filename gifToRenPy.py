@@ -21,6 +21,10 @@ gifFilePath = pickFile()
 # File name with extension.
 gifFile = gifFilePath.split("\\")[-1]
 
+# Check if extension is ".gif"
+if gifFile.split(".")[-1] != "gif":
+    raise Exception("That is not a gif!")
+
 # File name without extension.
 gifFileName = ".".join(gifFile.split(".")[:-1])
 

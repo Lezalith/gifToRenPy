@@ -11,5 +11,14 @@ def pickFile():
         
     return a
 
-# File path, with extension.
-gifFile = pickFile()
+# File path with extension.
+gifFilePath = pickFile()
+# print(gifFilePath)
+
+# File name with extension.
+gifFile = gifFilePath.split("\\")[-1]
+# print(gifFile)
+
+# File name without extension.
+gifFileName = ".".join(gifFile.split(".")[:-1])
+# print(gifFileName)

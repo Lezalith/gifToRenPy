@@ -79,19 +79,54 @@ for frameIndex in range( im.n_frames ):
     # Used in creating the .rpy file.
     pathsToFrames.append(saveFileName)
 
-print("Successfully saved all frames into \"{}\"".format(gifOutputDir))
+print("\nSuccessfully saved all frames into \"{}\".\n".format(gifOutputDir))
 
 
 ####### Settings for creating a Ren'Py image statement. ###########################################
 
+print("You will now be asked for some settings. Default values are chosen when nothing is typed in.")
+
+
 # Time interval between frames.
-pauseInterval = 0.1
+pauseInterval = raw_input("Pause interval between frames? (float, default is 0.1) -- ")
+
+# Default, if nothing given.
+if not pauseInterval:
+
+    pauseInterval = 0.1
+
+# Convert it to a float.
+else:
+
+    try:
+        pauseInterval = float(pauseInterval)
+
+    except:
+        raise Exception("Pause interval, if given, must be a whole or a decimal number.")
+
 
 # Whether the animation should repeat.
-addRepeat = True
+addRepeat = raw_input("Should the animation repeat? (y/n, default is False) -- ")
 
-# Properties that will be added onto the first line.
-firstProperties = "align (0.5, 0.5) alpha 0.5"
+if addRepeat == "y":
+
+    addRepeat = True
+
+elif addRepeat == "n" or not addRepeat:
+
+    addRepeat = False
+
+else:
+
+    raise Exception("Something other than \"y\", \"n\" or \"\" typed in.")
+
+
+# Properties that will be added onto the first line, in effect throughout the whole animation.
+firstProperties = raw_input("Add some properties onto the first line? (Properties written like you would in ATL, None by default) -- ")
+
+if not firstProperties:
+
+    firstProperties = None
 
 
 ####### Creating a .rpy file with an image statement. #############################################
@@ -125,4 +160,4 @@ with open(rpyFilePath, "w+") as f:
 
         f.write("    repeat")
 
-print("Successfully saved the .rpy file as \"{}\".".format(rpyFilePath))
+print("\nSuccessfully saved the .rpy file as \"{}\".\n".format(rpyFilePath))

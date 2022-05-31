@@ -1,4 +1,4 @@
-####### File stuff #####################################
+####### File stuff ################################################################################
 
 # Lets you pick a file and returns it.
 import easygui
@@ -26,8 +26,31 @@ gifFileName = ".".join(gifFile.split(".")[:-1])
 # print(gifFileName)
 
 
-####### Gif into frames #####################################
+####### Preparing a directory for the output ######################################################
 
+# For checking and creating directories.
+import os 
+
+# Folder inside which all results are placed.
+# "images/" means the result inside should be placed inside a project's "images" folder.
+baseOutputDir = "images/"
+
+# Create it, if it doesn't exist.
+if not os.path.isdir(baseOutputDir):
+
+	os.mkdir(baseOutputDir)	
+
+# Folder inside which this result will be placed, in the form of "baseOutputDir/gifFileName/"
+gifOutputDir = baseOutputDir + gifFileName + "/"
+ 
+# This folder must not already exist.
+if os.path.isdir(gifOutputDir):
+	raise Exception("It looks like the directory for output, \"{}\", exists already!".format( baseOutputDir + gifFileName ))
+
+os.mkdir(gifOutputDir)
+
+
+####### Gif into frames ###########################################################################
 
 # For the (gif -> png) conversion.
 from PIL import Image

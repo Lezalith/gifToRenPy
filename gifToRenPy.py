@@ -70,3 +70,15 @@ for frameIndex in range( im.n_frames ):
 
     # Save the frame.
     im.save( saveFileName )
+
+
+####### Settings for creating a Ren'Py image statement. ###########################################
+
+# Time interval between frames.
+pauseInterval = 0.1
+
+# Whether the animation should repeat.
+addRepeat = False
+
+# Properties that will be added onto the first line.
+firstProperties = None

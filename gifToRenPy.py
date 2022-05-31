@@ -66,7 +66,7 @@ for frameIndex in range( im.n_frames ):
 
     # Filename of the saved frame.
     # Format is "[chosen file without extension][index of the frame].png"
-    saveFileName = "{}{}.png".format(gifFileName, frameIndex)
+    saveFileName = gifOutputDir + "{}{}.png".format(gifFileName, frameIndex)
 
     # Save the frame.
     im.save( saveFileName )

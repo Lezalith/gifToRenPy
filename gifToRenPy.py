@@ -89,9 +89,22 @@ for frameIndex in range( im.n_frames ):
 print("\nSuccessfully saved all frames into \"{}\"\n\n###########################################################\n".format(gifOutputDir))
 
 
+####### Optionally creating a .rpy file.
+
+createRpy = raw_input("Would you like to create a .rpy file with an image statement, defining the image for you?\nI do this by default, when nothing is typed in. Type \"n\" if you don't want me to. -- ")
+
+# Negative input.
+if createRpy == "n":
+
+    print("\n###########################################################\n\nSkipped creating the .rpy file.")
+
+    # End the script.
+    exit()
+
+
 ####### Settings for creating a Ren'Py image statement. ###########################################
 
-print("You will now be asked for some settings, so that a .rpy file with a prepared image statement can be created.\nDefault values are chosen when nothing is typed in.\n")
+print("\nYou will now be asked for some settings.\nDefault values are chosen when nothing is typed in.\n")
 
 ### Time interval between frames. ###################################
 pauseInterval = raw_input("Pause interval between frames? (float, default is 0.1) -- ")
